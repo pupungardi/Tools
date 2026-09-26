@@ -1,0 +1,6 @@
+{
+  "name": "BrowserTools Desk",
+  "description": "Privacy-first, 100% client-side tool workbench. File conversion, developer utilities, security, and media tools running entirely in your browser without uploads.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
