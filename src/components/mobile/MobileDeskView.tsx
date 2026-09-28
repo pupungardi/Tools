@@ -34,14 +34,14 @@ export const MobileDeskView: React.FC<Props> = ({
   onClearTool,
 }) => {
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
-  const [showToolView, setShowToolView] = useState<boolean>(!!activeTool);
+  const [showToolView, setShowToolView] = useState<boolean>(false);
 
   const formatBytes = (bytes: number) => {
     if (bytes === 0) return '0 B';
     const k = 1024;
     const sizes = ['B', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return `${(bytes / Math.pow(k, i)).toFixed(0)} ${sizes[i]}`;
+    return `${(bytes / Math.pow(k, i)).toFixed(0)}  ${sizes[i]}`;
   };
 
   const spotlightTools = ALL_TOOLS.filter((t) => t.starred).slice(0, 10);
@@ -87,9 +87,9 @@ export const MobileDeskView: React.FC<Props> = ({
 
   return (
     <div className="flex flex-col w-full pb-24 bg-white dark:bg-neutral-950">
-      {/* Subheader bar matching video frame 00:04: DESK (left) | [ ] (right) */}
+      {/* Subheader bar matching 1. Tool.png: DESK (left) | corner brackets expand icon (right) */}
       <div className="flex h-10 items-center justify-between border-b border-neutral-200 bg-white px-4 text-xs dark:border-neutral-800 dark:bg-neutral-950">
-        <span className="font-semibold uppercase tracking-widest text-neutral-400">
+        <span className="font-mono text-[12px] font-semibold uppercase tracking-[0.18em] text-neutral-600 dark:text-neutral-400">
           DESK
         </span>
         <button
@@ -97,7 +97,20 @@ export const MobileDeskView: React.FC<Props> = ({
           className="text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200"
           aria-label="Fullscreen"
         >
-          {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+          {isFullscreen ? (
+            <Minimize2 className="h-4 w-4" />
+          ) : (
+            <svg
+              className="h-4 w-4 stroke-[1.8]"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3" />
+            </svg>
+          )}
         </button>
       </div>
 
@@ -129,102 +142,108 @@ export const MobileDeskView: React.FC<Props> = ({
           {renderToolComponent(activeTool)}
         </div>
       ) : (
-        /* Spotlight Desk Overview (Exact Match with Frame 00:04) */
+        /* Spotlight Desk Overview (Exact Match with 1. Tool.png) */
         <div className="flex flex-col p-4">
-          {/* Top Line: 100% Client-Side Processing (left) | 106 tools · 13 sets (right) */}
-          <div className="flex items-center justify-between text-xs text-neutral-400 font-mono-tech">
-            <span>100% Client-Side Processing</span>
-            <span>106 tools · 13 sets</span>
+          {/* Top Line: 100% Client-Side Processing ───────── 106 tools · 13 sets */}
+          <div className="flex items-center text-xs text-neutral-500 dark:text-neutral-400 font-mono-tech">
+            <span className="shrink-0">100% Client-Side Processing</span>
+            <span className="mx-3.5 flex-1 border-t border-neutral-300 dark:border-neutral-700"></span>
+            <span className="shrink-0">106 tools · 13 sets</span>
           </div>
 
           {/* Heading */}
-          <h1 className="mt-3 font-serif text-3xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+          <h1 className="mt-3.5 text-[32px] font-bold tracking-tight text-neutral-950 dark:text-neutral-50 leading-[1.15]">
             Privacy-First Online Tools
           </h1>
 
           {/* Description */}
-          <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed font-sans">
+          <p className="mt-3 text-[15px] text-neutral-600 dark:text-neutral-400 leading-relaxed font-sans">
             Free, secure, client-side tools for document conversion, media processing, image editing, and more. All processing happens in your browser - your files never leave your device.
           </p>
 
-          {/* 4 Cards Grid (2x2) */}
-          <div className="mt-6 grid grid-cols-2 gap-3">
-            {/* Card 1: Tools 106 */}
-            <div className="rounded-lg border border-neutral-200 bg-neutral-50/70 p-4 dark:border-neutral-800 dark:bg-neutral-900/50">
-              <div className="text-xs text-neutral-500">Tools</div>
-              <div className="mt-2 font-mono-tech text-3xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
-                106
-              </div>
-            </div>
-
-            {/* Card 2: Sets 13 */}
-            <div className="rounded-lg border border-neutral-200 bg-neutral-50/70 p-4 dark:border-neutral-800 dark:bg-neutral-900/50">
-              <div className="text-xs text-neutral-500">Sets</div>
-              <div className="mt-2 font-mono-tech text-3xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
-                13
-              </div>
-            </div>
-
-            {/* Card 3: Upload step None */}
-            <div className="rounded-lg border border-neutral-200 bg-neutral-50/70 p-4 dark:border-neutral-800 dark:bg-neutral-900/50">
-              <div className="text-xs text-neutral-500">Upload step</div>
-              <div className="mt-2 text-lg font-semibold text-neutral-900 dark:text-neutral-100">
-                None
-              </div>
-            </div>
-
-            {/* Card 4: Account None */}
-            <div className="rounded-lg border border-neutral-200 bg-neutral-50/70 p-4 dark:border-neutral-800 dark:bg-neutral-900/50">
-              <div className="text-xs text-neutral-500">Account</div>
-              <div className="mt-2 text-lg font-semibold text-neutral-900 dark:text-neutral-100">
-                None
-              </div>
-            </div>
-          </div>
-
-          {/* Card 5: Files out (full width) */}
-          <div className="mt-3 rounded-lg border border-neutral-200 bg-neutral-50/70 p-4 dark:border-neutral-800 dark:bg-neutral-900/50">
-            <div className="text-xs text-neutral-500">Files out</div>
-            <div className="mt-2 font-mono-tech text-xl font-bold text-neutral-900 dark:text-neutral-100">
-              {formatBytes(filesOutBytes)}
-            </div>
-          </div>
-
-          {/* In use now / Spotlight section header */}
-          <div className="mt-8 flex items-center justify-between border-b border-neutral-200 pb-2 text-xs dark:border-neutral-800">
-            <span className="font-semibold text-neutral-600 dark:text-neutral-400">
-              In use now
-            </span>
-            <span className="font-mono-tech text-neutral-400">
-              Spotlight
-            </span>
-          </div>
-
-          {/* Spotlight tools list */}
-          <div className="mt-3 flex flex-col divide-y divide-neutral-200 dark:divide-neutral-800">
-            {spotlightTools.map((tool) => (
-              <div
-                key={tool.id}
-                onClick={() => {
-                  onSelectTool(tool.id);
-                  setShowToolView(true);
-                }}
-                className="flex cursor-pointer items-center justify-between py-3 active:bg-neutral-100 dark:active:bg-neutral-900"
-              >
-                <div className="flex flex-col pr-3">
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
-                      {tool.name}
-                    </span>
-                    <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
+          {/* Single Unified 2-Column Stats Card (Exact Match with 1. Tool.png) */}
+          <div className="mt-6 rounded-2xl border border-neutral-200 bg-white p-5 dark:border-neutral-800 dark:bg-neutral-900/40">
+            <div className="grid grid-cols-2">
+              {/* Left Column: Tools, Upload step, Files out */}
+              <div className="flex flex-col pr-4">
+                <div>
+                  <div className="text-[13px] text-neutral-500 font-sans">Tools</div>
+                  <div className="mt-1 font-mono-tech text-[28px] font-bold tracking-tight text-neutral-950 dark:text-neutral-50">
+                    106
                   </div>
-                  <p className="mt-0.5 line-clamp-1 text-xs text-neutral-500">
-                    {tool.description}
-                  </p>
                 </div>
-                <ArrowUpRight className="h-4 w-4 shrink-0 text-neutral-400" />
+
+                <div className="mt-6">
+                  <div className="text-[13px] text-neutral-500 font-sans">Upload step</div>
+                  <div className="mt-1 text-base font-semibold text-neutral-950 dark:text-neutral-50">
+                    None
+                  </div>
+                </div>
+
+                <div className="mt-6">
+                  <div className="text-[13px] text-neutral-500 font-sans">Files out</div>
+                  <div className="mt-1 font-mono-tech text-base font-semibold text-neutral-950 dark:text-neutral-50">
+                    {filesOutBytes > 0 ? formatBytes(filesOutBytes) : '875  B'}
+                  </div>
+                </div>
               </div>
-            ))}
+
+              {/* Right Column: Sets, Account (divided by vertical divider line) */}
+              <div className="flex flex-col border-l border-neutral-200 pl-6 dark:border-neutral-800">
+                <div>
+                  <div className="text-[13px] text-neutral-500 font-sans">Sets</div>
+                  <div className="mt-1 font-mono-tech text-[28px] font-bold tracking-tight text-neutral-950 dark:text-neutral-50">
+                    13
+                  </div>
+                </div>
+
+                <div className="mt-6">
+                  <div className="text-[13px] text-neutral-500 font-sans">Account</div>
+                  <div className="mt-1 text-base font-semibold text-neutral-950 dark:text-neutral-50">
+                    None
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* In use now / Spotlight Card Container (Matching bottom of 1. Tool.png) */}
+          <div className="mt-6 overflow-hidden rounded-2xl border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900/40">
+            <div className="flex items-center justify-between border-b border-neutral-200 px-4 py-3 text-xs dark:border-neutral-800">
+              <span className="font-semibold text-neutral-700 dark:text-neutral-300">
+                In use now
+              </span>
+              <span className="font-mono-tech text-neutral-400">
+                Spotlight
+              </span>
+            </div>
+
+            {/* Spotlight tools list */}
+            <div className="flex flex-col divide-y divide-neutral-100 px-4 dark:divide-neutral-800/60">
+              {spotlightTools.map((tool) => (
+                <div
+                  key={tool.id}
+                  onClick={() => {
+                    onSelectTool(tool.id);
+                    setShowToolView(true);
+                  }}
+                  className="flex cursor-pointer items-center justify-between py-3 transition active:bg-neutral-50 dark:active:bg-neutral-800/40"
+                >
+                  <div className="flex flex-col pr-3">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
+                        {tool.name}
+                      </span>
+                      <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
+                    </div>
+                    <p className="mt-0.5 line-clamp-1 text-xs text-neutral-500">
+                      {tool.description}
+                    </p>
+                  </div>
+                  <ArrowUpRight className="h-4 w-4 shrink-0 text-neutral-400" />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}

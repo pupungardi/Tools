@@ -258,19 +258,19 @@ export const MobileBrowserView: React.FC<Props> = ({
 
   return (
     <div className="flex flex-col w-full pb-24 bg-white dark:bg-neutral-950 font-sans">
-      {/* Section Header "BROWSER" (Bab 6.B, Screenshot) */}
-      <div className="flex h-9 items-center justify-between border-b border-neutral-200 bg-[#f7f7f7] px-4 text-xs dark:border-neutral-800 dark:bg-neutral-900/90">
-        <span className="text-[12px] font-medium uppercase tracking-[0.14em] text-neutral-500 dark:text-neutral-400">
+      {/* Section Header "BROWSER" (Matching video frame 00:00) */}
+      <div className="flex items-center justify-between px-4 pt-3 pb-1 text-xs bg-white dark:bg-neutral-950">
+        <span className="text-[12px] font-medium uppercase tracking-[0.14em] text-neutral-400 dark:text-neutral-500">
           BROWSER
         </span>
-        <span className="font-mono text-[13px] text-neutral-500 dark:text-neutral-400">
+        <span className="font-mono text-[13px] text-neutral-400 dark:text-neutral-500">
           106
         </span>
       </div>
 
       {/* Search / Filter bar (Bab 6.C, Screenshot) */}
-      <div className="flex h-11 items-center border-b border-neutral-200 bg-white px-4 dark:border-neutral-800 dark:bg-neutral-950">
-        <Search className="h-4 w-4 shrink-0 text-neutral-400 dark:text-neutral-500 stroke-[1.5]" />
+      <div className="flex h-10 items-center border-b border-neutral-200 bg-white px-4 dark:border-neutral-800 dark:bg-neutral-950">
+        <Search className="h-4 w-4 shrink-0 text-neutral-400 dark:text-neutral-500 stroke-[1.8]" />
         <input
           type="text"
           value={filterText}
